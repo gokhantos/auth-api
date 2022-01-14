@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package userService;
+option go_package = "./;userService";
+
+message Session {
+  string session = 1;
+}
+
+message User {
+  string uuid = 1;
+  string username = 2;
+  string password = 3;
+  string email = 4;
+  google.protobuf.Timestamp created_at = 5;
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message RegisterRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message RegisterResponse {
+  User user = 1;
+}
+
+message FindByEmailRequest {
+  string email = 1;
+}
+
+message FindByEmailResponse {
+  User user = 1;
+}
+
+message FindByIDRequest {
+  string uuid = 1;
+}
+
+message FindByIDResponse {
+  User user = 1;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  User user = 1;
+  string session_id = 2;
+}
+
+message LogoutRequest{}
+
+message LogoutResponse {}
+
+service UserService{
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc FindByEmail(FindByEmailRequest) returns (FindByEmailResponse);
+  rpc FindByID(FindByIDRequest) returns (FindByIDResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Logout(LogoutRequest) returns(LogoutResponse);
+}
