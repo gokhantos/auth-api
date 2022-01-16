@@ -5,6 +5,7 @@ services:
     container_name: auth_api
     build:
       context: ./
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
     depends_on:
@@ -22,7 +23,20 @@ services:
     restart: always
     networks:
       - auth_network
+  couchbase:
+    image: couchbase:community-7.0.2
+    container_name: auth_couchbase
+    ports:
+      - 8091-8094:8091-8094
+      - 11210:11210
+    volumes:
+      - couchbase-data:/opt/couchbase/var
+    networks:
+      - auth_network
 
 networks:
   auth_network:
     driver: bridge
+
+volumes:
+  couchbase-data:

@@ -1,3 +1,4 @@
+//protoc user.proto --go-grpc_out=.
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
@@ -36,6 +37,15 @@ message FindByEmailResponse {
   User user = 1;
 }
 
+message FindByEmailOrUsernameRequest {
+  string email = 1;
+  string username = 2;
+}
+
+message FindByEmailOrUsernameResponse {
+  User user = 1;
+}
+
 message FindByIDRequest {
   string uuid = 1;
 }
@@ -54,6 +64,13 @@ message LoginResponse {
   string session_id = 2;
 }
 
+message GetMeRequest{}
+
+message GetMeResponse {
+  User user = 1;
+}
+
+
 message LogoutRequest{}
 
 message LogoutResponse {}
@@ -61,7 +78,9 @@ message LogoutResponse {}
 service UserService{
   rpc Register(RegisterRequest) returns (RegisterResponse);
   rpc FindByEmail(FindByEmailRequest) returns (FindByEmailResponse);
+  rpc FindByEmailOrUsername(FindByEmailOrUsernameRequest) returns (FindByEmailOrUsernameResponse);
   rpc FindByID(FindByIDRequest) returns (FindByIDResponse);
   rpc Login(LoginRequest) returns (LoginResponse);
+  rpc GetMe(GetMeRequest) returns(GetMeResponse);
   rpc Logout(LogoutRequest) returns(LogoutResponse);
 }

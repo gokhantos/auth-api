@@ -2,18 +2,20 @@ package config
 
 import (
 	"errors"
-	"github.com/spf13/viper"
 	"log"
 	"time"
+
+	"github.com/spf13/viper"
 )
 
 // App config struct
 type Config struct {
-	Server  ServerConfig
-	Redis   RedisConfig
-	Cookie  Cookie
-	Session Session
-	Logger  Logger
+	Server    ServerConfig
+	Couchbase CouchbaseConfig
+	Redis     RedisConfig
+	Cookie    Cookie
+	Session   Session
+	Logger    Logger
 }
 
 type ServerConfig struct {
@@ -42,6 +44,12 @@ type Logger struct {
 	DisableStacktrace bool
 	Encoding          string
 	Level             string
+}
+
+type CouchbaseConfig struct {
+	CBAddress  string
+	CBUsername string
+	CBPassword string
 }
 
 type RedisConfig struct {
@@ -77,6 +85,7 @@ func LoadConfig(filename string) (*viper.Viper, error) {
 
 	v.SetConfigName(filename)
 	v.AddConfigPath(".")
+	viper.AddConfigPath("/config")
 	v.AutomaticEnv()
 	if err := v.ReadInConfig(); err != nil {
 		if _, ok := err.(viper.ConfigFileNotFoundError); ok {

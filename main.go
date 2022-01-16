@@ -2,6 +2,8 @@ package main
 
 import (
 	"auth-api/config"
+	"auth-api/db"
+	"auth-api/internal/server"
 	"auth-api/utils"
 	"log"
 	"os"
@@ -14,4 +16,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Loading config: %v", err)
 	}
+
+	cb := db.CouchbaseConnect(cfg)
+	redis := db.NewRedisClient(cfg)
+	authServer := server.NewAuthServer(cfg, cb, redis)
+	authServer.Run()
 }

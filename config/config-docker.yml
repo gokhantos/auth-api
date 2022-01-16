@@ -1,0 +1,33 @@
+server:
+  AppVersion: 1.0.0
+  Port: :3000
+  PprofPort: :5555
+  Mode: Production
+  JwtSecretKey: secretkey
+  CookieName: jwt-token
+  ReadTimeout: 10
+  WriteTimeout: 10
+  SSL: true
+  CtxDefaultTimeout: 12
+  CSRF: true
+  Debug: false
+  MaxConnectionIdle: 5
+  Timeout: 15
+  MaxConnectionAge: 5
+  Time: 120
+
+redis:
+  RedisAddr: localhost:6379
+  RedisPassword:
+  RedisDb: 0
+  RedisDefaultdb: 0
+  MinIdleConns: 200
+  PoolSize: 12000
+  PoolTimeout: 240
+  Password: ""
+  DB: 0
+
+couchbase:
+  CBAddress: localhost
+  CBUsername: Administrator
+  CBPassword: password

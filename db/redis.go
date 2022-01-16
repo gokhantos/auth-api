@@ -2,8 +2,9 @@ package db
 
 import (
 	"auth-api/config"
-	"github.com/go-redis/redis"
 	"time"
+
+	"github.com/go-redis/redis/v8"
 )
 
 // Returns new redis client
